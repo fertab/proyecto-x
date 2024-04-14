@@ -62,7 +62,7 @@ Dos buckets de Amazon S3 son utilizados para almacenar datos de pagos y envíos.
 
 #### Base de Datos RDS
 
-La base de datos PostgreSQL de RDS se configura con una replicación de sincronización de 5ms RTT, y opera en modalidad Multi-AZ para alta disponibilidad.
+La base de datos PostgreSQL en RDS se configura con una replicación de sincronización de 5ms RTT, y opera en modalidad Multi-AZ para alta disponibilidad.
 
 - **Replicación Multi-AZ**: Garantiza la disponibilidad continua de datos en caso de falla de una zona de disponibilidad.
 
@@ -100,15 +100,15 @@ La salud de la región se monitorea utilizando Amazon CloudWatch, con notificaci
 
 #### Subscripción a Personal Health Dashboard
 
-Los usuarios están suscritos al Personal Health Dashboard de AWS para recibir información sobre el estado de salud de la infraestructura y la región.
+Los usuarios están suscriptos al Personal Health Dashboard de AWS para recibir información sobre el estado de salud de la infraestructura y la región.
 
 ---
 
 #### Zonas de Disponibilidad
 
-Tanto el Frontend como la base de datos RDS PostgreSQL están distribuidos en dos zonas de disponibilidad (AZs) para garantizar la tolerancia a fallos y la alta disponibilidad.
+Tanto el Frontend como la base de datos PostgreSQL en RDS están distribuidos en dos zonas de disponibilidad (AZs) para garantizar la tolerancia a fallos y la alta disponibilidad.
 
-#### NACL's (Network Access Control List) - Se ha implementado un NACL entre el Frontend y la base de datos RDS PostgreSQL para restringir el acceso desde el Frontend hacia RDS y viceversa.
+#### NACL's (Network Access Control List) - Se ha implementado un NACL entre el Frontend y la base de datos PostgreSQL en RDS para restringir el acceso desde el Frontend hacia RDS y viceversa.
 
 **Frontend - us-east-1**:
 - **Entrada**:
@@ -185,3 +185,5 @@ Tanto el Frontend como la base de datos RDS PostgreSQL están distribuidos en do
 ---
 
 Esta documentación proporciona una descripción detallada de la arquitectura de la aplicación Proyecto X en AWS, incluyendo cada componente y decisión de diseño tomada para garantizar la disponibilidad, escalabilidad y seguridad de la aplicación.
+
+# Fernando Taboada
