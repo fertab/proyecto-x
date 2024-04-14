@@ -171,7 +171,8 @@ Los usuarios están suscriptos al Personal Health Dashboard de AWS para recibir 
 
 Tanto el Frontend como la base de datos PostgreSQL en RDS están distribuidos en dos zonas de disponibilidad (AZs) para garantizar la tolerancia a fallos y la alta disponibilidad.
 
-#### NACL's (Network Access Control List) - Se ha implementado un NACL entre el Frontend y la base de datos PostgreSQL en RDS para restringir el acceso desde el Frontend hacia RDS y viceversa.
+#### NACL's (Network Access Control List)
+- Se ha implementado un NACL entre el Frontend y la base de datos PostgreSQL en RDS para restringir el acceso desde el Frontend hacia RDS y viceversa.
 
 **Frontend - us-east-1**:
 - **Entrada**:
