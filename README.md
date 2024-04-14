@@ -250,4 +250,10 @@ Tanto el Frontend como la base de datos PostgreSQL en RDS están distribuidos en
 
 Esta documentación proporciona una descripción detallada de la arquitectura de la aplicación Proyecto X en AWS, incluyendo cada componente y decisión de diseño tomada para garantizar la disponibilidad, escalabilidad y seguridad de la aplicación.
 
+---
+
+## Recomendaciones
+
+Como recomendación sugeriría implementar CloudFront como una capa de distribución de contenido para mejorar la entrega de contenido estático y dinámico, optimizando la velocidad de carga del sitio web y reduciendo la carga en los servidores de origen. Además, configurar una estrategia de caché efectiva ayudaría a maximizar los beneficios de rendimiento de CloudFront
+
 # Fernando Taboada
