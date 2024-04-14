@@ -1,4 +1,4 @@
-## Proyecto X
+![image](https://github.com/fertab/proyecto-x/assets/8042545/b98430a9-07d1-4358-bb4b-c1348a4480af)## Proyecto X
 
 ### Documentación de Arquitectura
 
@@ -166,7 +166,16 @@ La base de datos PostgreSQL en RDS se configura con una replicación de sincroni
 
 #### Estrategia de Disaster Recovery
 
-Se implementa una estrategia de recuperación ante desastres Multi-Site Active/Active entre las regiones us-east-1 y us-east-2 de AWS.
+Se implementa una estrategia de recuperación ante desastres Multi-Site Active/Active entre las regiones us-east-1 y us-east-2 de AWS que permite recuperarse en 5 minutos.
+
+![image](https://github.com/fertab/proyecto-x/assets/8042545/11f1e876-e82d-4c50-83ad-78a7aed20fc3)
+
+Este plan de recuperación ante desastres es el más rápido en la restauración del sistema durante un evento de recuperación ante desastres.
+Multi-site es una copia uno a uno de su infraestructura que se encuentra y se ejecuta en otra región o AZ, conocida como configuración activo-activo.
+Ofrece el mejor RTO (Recovery Time Objective) y RPO (Recovery Point Objective), ya que no se espera tiempo de inactividad y se debe experimentar poca o ninguna pérdida de datos, lo cual es acorde a lo requerido por el Proyecto X.
+Puede utilizar un servicio DNS que admita el enrutamiento ponderado, como Route 53, para enrutar el tráfico de producción a diferentes sitios que brindan la misma aplicación de Proyecto X.
+Durante la conmutación por error, puede aumentar rápidamente la capacidad informática utilizando Autoscaling o cambiando el tamaño de sus instancias a un tamaño mayor.
+Varios servicios en AWS, como RDS, ofrecen una función multi-AZ que permite aprovisionar recursos en una ubicación diferente para una configuración más tolerante a fallas.
 
 ---
 
