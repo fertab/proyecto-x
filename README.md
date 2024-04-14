@@ -282,7 +282,7 @@ Esta documentación proporciona una descripción detallada de la arquitectura de
 
 ## Recomendaciones
 
-1. En el enunciado indica "Database: PostgreSQL, la cual está desplegada sobre RDS. Todas las aplicaciones usan el mismo cluster de RDS."
+1. En el enunciado indica **"Database: PostgreSQL, la cual está desplegada sobre RDS. Todas las aplicaciones usan el mismo cluster de RDS."**
    
    Como buena práctica no considero que exista comunicación entre el Frontend y la base de datos, sino que esta se haga a través del Backend.
    Por ese motivo se configuró un NACL entre el Frontend y la base de datos, para no permitir el tráfico entre estas capas.
