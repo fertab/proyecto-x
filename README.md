@@ -12,9 +12,8 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
 - **AWS WAF**: El tráfico del usuario atraviesa AWS WAF para protección contra ataques.
 - **ALB (Application Load Balancer)**: El tráfico llega al ALB del frontend, distribuyendo la carga entre las instancias ECS.
 
-##### Configuración de Security Groups
-- Puertos 80 y 443 abiertos para permitir el tráfico HTTP y HTTPS entre los componentes del frontend.
-- Puerto 5432 abierto para permitir el tráfico hacia la base de datos Postgresql desplegada en RDS de manera interna.
+##### Firewalls
+- Security Group configurado con los puertos 80 y 443 para permitir el tráfico HTTP y HTTPS entre los componentes del frontend.
 
 #### Configuración de las subredes
 - Todas las subredes de la capa de Frontend y la base de datos PostgreSQL en RDS son privadas, lo que significa que no es posible acceder a ellas directamente desde Internet. Sin embargo, cuentan con un NAT Gateway configurado para permitir el acceso a Internet saliente de manera controlada.
@@ -254,6 +253,13 @@ Esta documentación proporciona una descripción detallada de la arquitectura de
 
 ## Recomendaciones
 
-Como recomendación sugeriría implementar CloudFront como una capa de distribución de contenido para mejorar la entrega de contenido estático y dinámico, optimizando la velocidad de carga del sitio web y reduciendo la carga en los servidores de origen. Además, configurar una estrategia de caché efectiva ayudaría a maximizar los beneficios de rendimiento de CloudFront
+1. En el enunciado indica "Database: PostgreSQL, la cual está desplegada sobre RDS. Todas las aplicaciones usan el mismo cluster de RDS."
+   
+   Como buena práctica no considero que exista comunicación entre el Frontend y la base de datos, sino que esta se haga a través del Backend.
+   Por ese motivo se configuró un NACL entre el Frontend y la base de datos, para no permitir el tráfico entre estas capas.
+   Si de cualquier forma se quisiera esto, se configuraría un Security Group en RDS con el puerto 5432, se removería el NACL y se configuraría los accesos desde las Route Tables de cada capa, lo que permitiría el tráfico.
+
+3. Como recomendación sugeriría implementar CloudFront como una capa de distribución de contenido para mejorar la entrega de contenido estático y dinámico, optimizando la velocidad de carga del sitio web y reduciendo la carga en los servidores de origen. Además, configurar una estrategia de caché efectiva ayudaría a maximizar los beneficios de rendimiento de CloudFront
+4. 
 
 # Fernando Taboada
