@@ -43,7 +43,7 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
 
 El backend de la aplicación consiste en tres funciones Lambda: Payments, Products y Shipping.
 
-- **Lambda Functions**: Desplegadas en AWS Lambda para una ejecución sin servidor y alta disponibilidad.
+- **Lambda Functions**: Desplegadas en AWS Lambda para una ejecución sin servidor y alta disponibilidad. Las funciones de Lambda ya son altamente disponibles y escalables por diseño. No es necesario tomar medidas adicionales para garantizar la alta disponibilidad en esta capa
 
 ##### Acceso a Recursos
 - **Products**: Accede a la base de datos RDS PostgreSQL vía IAM Roles API Call para obtener datos.
