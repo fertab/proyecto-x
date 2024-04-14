@@ -20,6 +20,9 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
   
 - Únicamente el Application Load Balancer (ALB) tiene una subred de acceso público con un Internet Gateway configurado para que pueda ser alcanzado desde internet. El usuario después de acceder al dominio DNS de Route53 luego deberá atravesar el Web Application Firewall (WAF) el cual actúa como una capa de seguridad adicional al inspeccionar y filtrar el tráfico web, protegiendo así la aplicación de posibles ataques maliciosos antes de llegar al ALB.
 
+##### Acceso a Backend
+- Accede al Backend vía IAM Roles API Call.
+
 ## IAM Roles/Policies
 
 #### Acceso Frontend --> Backend
