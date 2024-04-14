@@ -22,6 +22,20 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
 
 ## IAM Roles/Policies
 
+#### Acceso Frontend --> Backend
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "lambda:InvokeFunction",
+            "Resource": "arn:aws:lambda:region:account-id:function:nombre-de-la-funcion"
+        }
+    ]
+}
+```
+
 #### Acceso Lambda Products --> RDS
 
 ```json
