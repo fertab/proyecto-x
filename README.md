@@ -197,7 +197,7 @@ Tanto el Frontend como la base de datos PostgreSQL en RDS están distribuidos en
   - Protocolo: Todos
   - Puerto de origen: Todos
   - Puerto de destino: Todos
-  - Rango de IP de origen: 10.0.4.0/24 (Subred RDS)
+  - Rango de IP de origen: 10.0.4.0/23 (Subred RDS)
   - Rango de IP de destino: 10.0.0.0/22 (Todas las subredes Frontend)
 - **Salida**:
   - Número de regla: 100
@@ -206,7 +206,7 @@ Tanto el Frontend como la base de datos PostgreSQL en RDS están distribuidos en
   - Puerto de origen: Todos
   - Puerto de destino: Todos
   - Rango de IP de origen: 10.0.0.0/22 (Todas las subredes Frontend)
-  - Rango de IP de destino: 10.0.4.0/24 (Subred RDS)
+  - Rango de IP de destino: 10.0.4.0/23 (Subred RDS)
 
 **RDS - us-east-1**:
 - **Entrada**:
@@ -216,14 +216,14 @@ Tanto el Frontend como la base de datos PostgreSQL en RDS están distribuidos en
   - Puerto de origen: Todos
   - Puerto de destino: Todos
   - Rango de IP de origen: 10.0.0.0/22 (Todas las subredes Frontend)
-  - Rango de IP de destino: 10.0.4.0/24 (Subred RDS)
+  - Rango de IP de destino: 10.0.4.0/23 (Subred RDS)
 - **Salida**:
   - Número de regla: 100
   - Tipo: Denegar
   - Protocolo: Todos
   - Puerto de origen: Todos
   - Puerto de destino: Todos
-  - Rango de IP de origen: 10.0.4.0/24 (Subred RDS)
+  - Rango de IP de origen: 10.0.4.0/23 (Subred RDS)
   - Rango de IP de destino: 10.0.0.0/22 (Todas las subredes Frontend)
 
 **Frontend - us-east-2**:
@@ -233,7 +233,7 @@ Tanto el Frontend como la base de datos PostgreSQL en RDS están distribuidos en
   - Protocolo: Todos
   - Puerto de origen: Todos
   - Puerto de destino: Todos
-  - Rango de IP de origen: 172.0.4.0/24 (Subred RDS)
+  - Rango de IP de origen: 172.0.4.0/23 (Subred RDS)
   - Rango de IP de destino: 172.0.0.0/22 (Todas las subredes Frontend)
 - **Salida**:
   - Número de regla: 100
@@ -242,7 +242,7 @@ Tanto el Frontend como la base de datos PostgreSQL en RDS están distribuidos en
   - Puerto de origen: Todos
   - Puerto de destino: Todos
   - Rango de IP de origen: 172.0.0.0/22 (Todas las subredes Frontend)
-  - Rango de IP de destino: 172.0.4.0/24 (Subred RDS)
+  - Rango de IP de destino: 172.0.4.0/23 (Subred RDS)
 
 **RDS - us-east-2**:
 - **Entrada**:
@@ -252,14 +252,14 @@ Tanto el Frontend como la base de datos PostgreSQL en RDS están distribuidos en
   - Puerto de origen: Todos
   - Puerto de destino: Todos
   - Rango de IP de origen: 172.0.0.0/22 (Todas las subredes Frontend)
-  - Rango de IP de destino: 172.0.4.0/24 (Subred RDS)
+  - Rango de IP de destino: 172.0.4.0/23 (Subred RDS)
 - **Salida**:
   - Número de regla: 100
   - Tipo: Denegar
   - Protocolo: Todos
   - Puerto de origen: Todos
   - Puerto de destino: Todos
-  - Rango de IP de origen: 172.0.4.0/24 (Subred RDS)
+  - Rango de IP de origen: 172.0.4.0/23 (Subred RDS)
   - Rango de IP de destino: 172.0.0.0/22 (Todas las subredes Frontend)
 
 ---
