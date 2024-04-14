@@ -290,8 +290,15 @@ Esta documentación proporciona una descripción detallada de la arquitectura de
 
 2. Como recomendación sugeriría implementar **CloudFront** como una capa de distribución de contenido para mejorar la entrega de contenido estático y dinámico, optimizando la velocidad de carga del sitio web y reduciendo la carga en los servidores de origen. Además, configurar una estrategia de caché efectiva ayudaría a maximizar los beneficios de rendimiento de CloudFront.
 
-3. Por último, para garantizar la seguridad y disponibilidad de los datos, recomiendo el uso de **AWS Backup**.
+3. Además recomiendo, para garantizar la seguridad y disponibilidad de los datos, recomiendo el uso de **AWS Backup**.
    - Con AWS Backup será posible respaldar de manera automatizada los recursos críticos, incluyendo el Frontend, el Backend y la base de datos en RDS.
    - Esto proporcionará una capa adicional de protección de los datos, facilitando la restauración en caso de pérdida de información o falla del sistema, brindando tranquilidad y seguridad para la infraestructura en la nube.
+
+4. **Despliegue Continuo**
+- Por último recomiendo el uso de repositorios de código como **AWS CodeCommit** para almacenar el código fuente de las aplicaciones **Home** y **Checkout**.
+- Esto proporcionará un control de versiones centralizado y un historial de cambios para el código.
+
+- **Pipeline:** 
+- Es posible configurar un pipeline de despliegue continuo utilizando **AWS CodePipeline** el cual puede estar integrado con **AWS CodeBuild** que permitirá compilar y probar la aplicación, para luego desplegarla automáticamente en ECS.
 
 # Fernando Taboada
