@@ -37,6 +37,7 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
     }
   ]
 }
+```json
 
 ## Acceso Lambdas --> AWS API Gateway
 
@@ -53,6 +54,7 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
         }
     ]
 }
+```json
 
 ## Acceso Lambdas --> Buckets S3
 
@@ -74,6 +76,7 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
         }
     ]
 }
+```json
 
 ##### Configuración de Tablas de Ruta
 - Las tablas de ruta están configuradas para enrutar el tráfico a través de dos zonas de disponibilidad para garantizar tolerancia a fallos.
