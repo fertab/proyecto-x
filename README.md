@@ -1,4 +1,4 @@
-![image](https://github.com/fertab/proyecto-x/assets/8042545/b98430a9-07d1-4358-bb4b-c1348a4480af)## Proyecto X
+## Proyecto X
 
 ### Documentación de Arquitectura
 
