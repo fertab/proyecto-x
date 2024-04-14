@@ -17,8 +17,9 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
 - Puerto 5432 abierto para permitir el tráfico hacia la base de datos Postgresql desplegada en RDS.
 
 #### Configuración de las subredes
-- Todas las subredes de la capa de Frontend son privadas sin acceso a internet, al igual que las subredes de la base de datos Postgresql en RDS
-- Únicamente el Application Load Balancer (ALB) tiene una subred de acceso público para que pueda ser alcanzado desde internet. Para que esto sea posible, el usuario después de acceder al dominio DNS de Route53 luego deberá atravesar el Web Application Firewall (WAF) el cual actúa como una capa de seguridad adicional al inspeccionar y filtrar el tráfico web, protegiendo así la aplicación de posibles ataques maliciosos antes de llegar al ALB.
+- Todas las subredes de la capa de Frontend y la base de datos PostgreSQL en RDS son privadas, lo que significa que no es posible acceder a ellas directamente desde Internet. Sin embargo, cuentan con un NAT Gateway configurado para permitir el acceso a Internet saliente de manera controlada.
+  
+- Únicamente el Application Load Balancer (ALB) tiene una subred de acceso público con un Internet Gateway configurado para que pueda ser alcanzado desde internet. El usuario después de acceder al dominio DNS de Route53 luego deberá atravesar el Web Application Firewall (WAF) el cual actúa como una capa de seguridad adicional al inspeccionar y filtrar el tráfico web, protegiendo así la aplicación de posibles ataques maliciosos antes de llegar al ALB.
 
 ## IAM Roles/Policies
 
