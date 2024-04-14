@@ -259,7 +259,6 @@ Esta documentación proporciona una descripción detallada de la arquitectura de
    Por ese motivo se configuró un NACL entre el Frontend y la base de datos, para no permitir el tráfico entre estas capas.
    Si de cualquier forma se quisiera esto, se configuraría un Security Group en RDS con el puerto 5432, se removería el NACL y se configuraría los accesos desde las Route Tables de cada capa, lo que permitiría el tráfico.
 
-3. Como recomendación sugeriría implementar CloudFront como una capa de distribución de contenido para mejorar la entrega de contenido estático y dinámico, optimizando la velocidad de carga del sitio web y reduciendo la carga en los servidores de origen. Además, configurar una estrategia de caché efectiva ayudaría a maximizar los beneficios de rendimiento de CloudFront
-4. 
+2. Como recomendación sugeriría implementar CloudFront como una capa de distribución de contenido para mejorar la entrega de contenido estático y dinámico, optimizando la velocidad de carga del sitio web y reduciendo la carga en los servidores de origen. Además, configurar una estrategia de caché efectiva ayudaría a maximizar los beneficios de rendimiento de CloudFront 
 
 # Fernando Taboada
