@@ -14,6 +14,7 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
 
 ##### Configuración de Security Groups
 - Puertos 80 y 443 abiertos para permitir el tráfico HTTP y HTTPS entre los componentes del frontend.
+- Puerto 5432 abierto para permitir el tráfico hacia la base de datos Postgresql desplegada en RDS.
 
 ##### Configuración de Tablas de Ruta
 - Las tablas de ruta están configuradas para enrutar el tráfico a través de dos zonas de disponibilidad para garantizar tolerancia a fallos.
