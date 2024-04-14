@@ -24,7 +24,7 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
 
 ## Acceso Lambda Products --> RDS
 
-(```json
+```json
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -37,7 +37,7 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
     }
   ]
 }
-)
+```json
 
 ## Acceso Lambdas --> AWS API Gateway
 
@@ -55,7 +55,7 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
     ]
 }
 ```json
-
+```json
 ## Acceso Lambdas --> Buckets S3
 
 ```json
