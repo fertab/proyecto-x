@@ -20,9 +20,9 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
 - Todas las subredes de la capa de Frontend son privadas sin acceso a internet, al igual que las subredes de la base de datos Postgresql en RDS
 - Únicamente el Application Load Balancer (ALB) tiene una subred de acceso público para que pueda ser alcanzado desde internet. Para que esto sea posible, el usuario después de acceder al dominio DNS de Route53 luego deberá atravesar el Web Application Firewall (WAF) el cual actúa como una capa de seguridad adicional al inspeccionar y filtrar el tráfico web, protegiendo así la aplicación de posibles ataques maliciosos antes de llegar al ALB.
 
-#### IAM Roles/Policies
+## IAM Roles/Policies
 
-## Acceso Lambda Products --> RDS
+#### Acceso Lambda Products --> RDS
 
 ```json
 {
@@ -39,7 +39,7 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
 }
 ```
 
-## Acceso Lambdas --> AWS API Gateway
+#### Acceso Lambdas --> AWS API Gateway
 
 ```json
 {
@@ -55,7 +55,7 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
     ]
 }
 ```
-## Acceso Lambdas --> Buckets S3
+#### Acceso Lambdas --> Buckets S3
 
 ```json
 {
