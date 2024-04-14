@@ -14,7 +14,7 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
 
 ##### Configuración de Security Groups
 - Puertos 80 y 443 abiertos para permitir el tráfico HTTP y HTTPS entre los componentes del frontend.
-- Puerto 5432 abierto para permitir el tráfico hacia la base de datos Postgresql desplegada en RDS.
+- Puerto 5432 abierto para permitir el tráfico hacia la base de datos Postgresql desplegada en RDS de manera interna.
 
 #### Configuración de las subredes
 - Todas las subredes de la capa de Frontend y la base de datos PostgreSQL en RDS son privadas, lo que significa que no es posible acceder a ellas directamente desde Internet. Sin embargo, cuentan con un NAT Gateway configurado para permitir el acceso a Internet saliente de manera controlada.
