@@ -74,7 +74,7 @@ El backend de la aplicación consiste en tres funciones Lambda: Payments, Produc
 ##### Acceso a Recursos
 - **Products**: Accede a la base de datos RDS PostgreSQL vía IAM Roles API Call para obtener datos.
 - **Shipping/Payments**: Acceden a AWS API Gateway vía IAM Roles API Call para interactuar con servicios externos.
-- Todas las Lambda tienen acceso a los buckets S3 de Pagos y Envíos vía IAM Roles API Call.
+- Todas las Lambda son accesibles desde el Frontend como se mencionó con anterioridad, y tienen acceso a los buckets S3 de Pagos y Envíos vía IAM Roles API Call.
 
 ## IAM Roles/Policies Backend
 
