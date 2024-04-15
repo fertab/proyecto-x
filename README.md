@@ -296,10 +296,10 @@ Esta documentación proporciona una descripción detallada de la arquitectura de
    - Esto proporcionará una capa adicional de protección de los datos, facilitando la restauración en caso de pérdida de información o falla del sistema, brindando tranquilidad y seguridad para la infraestructura en la nube.
 
 4. **Despliegue Continuo**
-- Por último recomiendo el uso de repositorios de código como **AWS CodeCommit** para almacenar el código fuente de las aplicaciones **Home** y **Checkout**.
+- Por último recomiendo el uso de repositorios de código como **AWS CodeCommit** para almacenar el código fuente de las aplicaciones.
 - Esto proporcionará un control de versiones centralizado y un historial de cambios para el código.
 
 - **Pipeline:** 
-- Es posible configurar un pipeline de despliegue continuo utilizando **AWS CodePipeline** el cual puede estar integrado con **AWS CodeBuild** que permitirá compilar y probar la aplicación, para luego desplegarla automáticamente en ECS.
+- Es posible configurar un pipeline de despliegue continuo utilizando **AWS CodePipeline** el cual puede estar integrado con **AWS CodeBuild** que permitirá compilar y probar la aplicación, para luego desplegarla automáticamente.
 
 # Fernando Taboada
