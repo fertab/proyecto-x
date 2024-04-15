@@ -3,7 +3,7 @@
 ### Documentación de Arquitectura
 
 La siguiente documentación describe la arquitectura de la aplicación Proyecto X desplegada en AWS, detallando cada componente y decisión de diseño.
-
+**Diagrama de arquitectura adjunto en el repositorio como 'Proyecto X.png'**
 ---
 
 #### Frontend
