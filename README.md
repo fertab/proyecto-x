@@ -281,7 +281,7 @@ Esta documentación proporciona una descripción detallada de la arquitectura de
 
 ---
 
-## Recomendaciones
+## Recomendaciones de mejoras a futuro y comentarios
 
 1. En el enunciado indica **"Database: PostgreSQL, la cual está desplegada sobre RDS. Todas las aplicaciones usan el mismo cluster de RDS."**
    
