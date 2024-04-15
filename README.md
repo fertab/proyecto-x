@@ -291,7 +291,7 @@ Esta documentación proporciona una descripción detallada de la arquitectura de
 
 2. Como recomendación sugeriría implementar **CloudFront** como una capa de distribución de contenido para mejorar la entrega de contenido estático y dinámico, optimizando la velocidad de carga del sitio web y reduciendo la carga en los servidores de origen. Además, configurar una estrategia de caché efectiva ayudaría a maximizar los beneficios de rendimiento de CloudFront.
 
-3. Además recomiendo, para garantizar la seguridad y disponibilidad de los datos, recomiendo el uso de **AWS Backup**.
+3. Además, para garantizar la seguridad y disponibilidad de los datos, recomiendo el uso de **AWS Backup**.
    - Con AWS Backup será posible respaldar de manera automatizada los recursos críticos, incluyendo el Frontend, el Backend y la base de datos en RDS.
    - Esto proporcionará una capa adicional de protección de los datos, facilitando la restauración en caso de pérdida de información o falla del sistema, brindando tranquilidad y seguridad para la infraestructura en la nube.
 
