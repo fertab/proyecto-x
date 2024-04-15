@@ -167,7 +167,7 @@ La base de datos PostgreSQL en RDS se configura con una replicación de sincroni
 
 #### Estrategia de Disaster Recovery
 
-Se implementa una estrategia de recuperación ante desastres Multi-Site Active/Active entre las regiones us-east-1 y us-east-2 de AWS que permite recuperarse en 5 minutos.
+Se implementa una estrategia de recuperación ante desastres **Multi-Site Active/Active** entre las regiones us-east-1 y us-east-2 de AWS que permite recuperarse en 5 minutos.
 
 ![image](https://github.com/fertab/proyecto-x/assets/8042545/6ddb7350-8fc5-49c3-b246-82449b3aaf18)
 
