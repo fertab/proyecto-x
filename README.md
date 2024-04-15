@@ -26,7 +26,7 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
 ##### Acceso a Backend
 - El Frontend accede al Backend vía IAM Roles API Call.
 
-## IAM Roles/Policies
+## IAM Roles/Policies Frontend
 
 #### Acceso Frontend --> Backend
 ```json
@@ -41,6 +41,42 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
     ]
 }
 ```
+##### Configuración de Tablas de Ruta
+- Las tablas de ruta están configuradas para enrutar el tráfico a través de dos zonas de disponibilidad para garantizar tolerancia a fallos.
+
+**Tablas de Ruta Frontend - us-east-1**
+| Destination  | Target   |
+|--------------|----------|
+| 10.0.0.0/24  | Local    |
+| 10.0.1.0/24  | Local    |
+| 10.0.2.0/24  | Local    |
+| 10.0.3.0/24  | Local    |
+
+**Tablas de Ruta Frontend - us-east-2**
+| Destination  | Target   |
+|--------------|----------|
+| 172.0.0.0/24 | Local    |
+| 172.0.1.0/24 | Local    |
+| 172.0.2.0/24 | Local    |
+| 172.0.3.0/24 | Local    |
+
+##### Auto Scaling
+- Se implementa Auto Scaling para el frontend, proporcionando alta disponibilidad y escalabilidad automática.
+
+---
+
+#### Backend
+
+El backend de la aplicación consiste en tres funciones Lambda: Payments, Products y Shipping.
+
+- **Lambda Functions**: Desplegadas en AWS Lambda para una ejecución sin servidor y alta disponibilidad. Las funciones de Lambda ya son altamente disponibles y escalables por diseño. No es necesario tomar medidas adicionales para garantizar la alta disponibilidad en esta capa
+
+##### Acceso a Recursos
+- **Products**: Accede a la base de datos RDS PostgreSQL vía IAM Roles API Call para obtener datos.
+- **Shipping/Payments**: Acceden a AWS API Gateway vía IAM Roles API Call para interactuar con servicios externos.
+- Todas las Lambda tienen acceso a los buckets S3 de Pagos y Envíos vía IAM Roles API Call.
+
+## IAM Roles/Policies Backend
 
 #### Acceso Lambda Products --> RDS
 
@@ -96,42 +132,6 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
     ]
 }
 ```
-
-##### Configuración de Tablas de Ruta
-- Las tablas de ruta están configuradas para enrutar el tráfico a través de dos zonas de disponibilidad para garantizar tolerancia a fallos.
-
-**Tablas de Ruta Frontend - us-east-1**
-| Destination  | Target   |
-|--------------|----------|
-| 10.0.0.0/24  | Local    |
-| 10.0.1.0/24  | Local    |
-| 10.0.2.0/24  | Local    |
-| 10.0.3.0/24  | Local    |
-
-**Tablas de Ruta Frontend - us-east-2**
-| Destination  | Target   |
-|--------------|----------|
-| 172.0.0.0/24 | Local    |
-| 172.0.1.0/24 | Local    |
-| 172.0.2.0/24 | Local    |
-| 172.0.3.0/24 | Local    |
-
-##### Auto Scaling
-- Se implementa Auto Scaling para el frontend, proporcionando alta disponibilidad y escalabilidad automática.
-
----
-
-#### Backend
-
-El backend de la aplicación consiste en tres funciones Lambda: Payments, Products y Shipping.
-
-- **Lambda Functions**: Desplegadas en AWS Lambda para una ejecución sin servidor y alta disponibilidad. Las funciones de Lambda ya son altamente disponibles y escalables por diseño. No es necesario tomar medidas adicionales para garantizar la alta disponibilidad en esta capa
-
-##### Acceso a Recursos
-- **Products**: Accede a la base de datos RDS PostgreSQL vía IAM Roles API Call para obtener datos.
-- **Shipping/Payments**: Acceden a AWS API Gateway vía IAM Roles API Call para interactuar con servicios externos.
-- Todas las Lambda tienen acceso a los buckets S3 de Pagos y Envíos vía IAM Roles API Call.
-
 ---
 
 #### Almacenamiento
