@@ -1,34 +1,34 @@
-## Proyecto X
+## Project X
 
-### Documentación de Arquitectura
+### Architecture Documentation
 
-La siguiente documentación describe la arquitectura de la aplicación Proyecto X desplegada en AWS, detallando cada componente y decisión de diseño.
+The following documentation describes the architecture of the Project X application deployed on AWS, detailing each component and design decision.
 
-#### **Diagrama de arquitectura adjunto en el repositorio como 'Proyecto X.png'**
+#### **Architecture diagram attached in the repository as 'Proyecto X.png'**
 ---
 
 #### Frontend
 
-El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, desplegadas en Amazon Elastic Container Service (ECS) para garantizar alta disponibilidad.
+The application frontend consists of two applications: Home and Checkout, deployed on Amazon Elastic Container Service (ECS) to ensure high availability.
 
-- **Dominio DNS de Route53 con DNS Failover**: Los usuarios se conectan al dominio DNS de Route53, configurado con DNS Failover para redirigir automáticamente el tráfico en caso de una falla en la región principal.
-- **AWS WAF**: El tráfico del usuario atraviesa AWS WAF para protección contra ataques.
-- **ALB (Application Load Balancer)**: El tráfico llega al ALB del frontend, distribuyendo la carga entre las instancias ECS.
+- **Route53 DNS Domain with DNS Failover**: Users connect to the Route53 DNS domain, configured with DNS Failover to automatically redirect traffic in case of a failure in the primary region.
+- **AWS WAF**: User traffic passes through AWS WAF for attack protection.
+- **ALB (Application Load Balancer)**: Traffic arrives at the frontend ALB, distributing the load among ECS instances.
 
 ##### Firewalls
-- Security Group configurado con los puertos 80 y 443 para permitir el tráfico HTTP y HTTPS entre los componentes del frontend.
+- Security Group configured with ports 80 and 443 to allow HTTP and HTTPS traffic between frontend components.
 
-#### Configuración de las subredes
-- Todas las subredes de la capa de Frontend y la base de datos PostgreSQL en RDS son privadas, lo que significa que no es posible acceder a ellas directamente desde Internet. Sin embargo, cuentan con un NAT Gateway configurado para permitir el acceso a Internet saliente de manera controlada.
+#### Subnet Configuration
+- All subnets in the Frontend layer and the PostgreSQL database in RDS are private, meaning they cannot be accessed directly from the Internet. However, they have a NAT Gateway configured to allow controlled outbound Internet access.
   
-- Únicamente el Application Load Balancer (ALB) tiene una subred de acceso público con un Internet Gateway configurado para que pueda ser alcanzado desde internet. El usuario después de acceder al dominio DNS de Route53 luego deberá atravesar el Web Application Firewall (WAF) el cual actúa como una capa de seguridad adicional al inspeccionar y filtrar el tráfico web, protegiendo así la aplicación de posibles ataques maliciosos antes de llegar al ALB.
+- Only the Application Load Balancer (ALB) has a public access subnet with an Internet Gateway configured so it can be reached from the internet. After accessing the Route53 DNS domain, the user must then pass through the Web Application Firewall (WAF), which acts as an additional security layer by inspecting and filtering web traffic, thus protecting the application from potential malicious attacks before reaching the ALB.
 
-##### Acceso a Backend
-- El Frontend accede al Backend vía IAM Roles API Call.
+##### Backend Access
+- The Frontend accesses the Backend via IAM Roles API Call.
 
 ## IAM Roles/Policies Frontend
 
-#### Acceso Frontend --> Backend
+#### Frontend --> Backend Access
 ```json
 {
     "Version": "2012-10-17",
@@ -41,10 +41,10 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
     ]
 }
 ```
-##### Configuración de Tablas de Ruta
-- Las tablas de ruta están configuradas para enrutar el tráfico a través de dos zonas de disponibilidad para garantizar tolerancia a fallos.
+##### Route Table Configuration
+- Route tables are configured to route traffic through two availability zones to ensure fault tolerance.
 
-**Tablas de Ruta Frontend - us-east-1**
+**Frontend Route Tables - us-east-1**
 | Destination  | Target   |
 |--------------|----------|
 | 10.0.0.0/24  | Local    |
@@ -52,7 +52,7 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
 | 10.0.2.0/24  | Local    |
 | 10.0.3.0/24  | Local    |
 
-**Tablas de Ruta Frontend - us-east-2**
+**Frontend Route Tables - us-east-2**
 | Destination  | Target   |
 |--------------|----------|
 | 172.0.0.0/24 | Local    |
@@ -61,24 +61,24 @@ El frontend de la aplicación se compone de dos aplicaciones: Home y Checkout, d
 | 172.0.3.0/24 | Local    |
 
 ##### Auto Scaling
-- Se implementa Auto Scaling para el frontend, proporcionando alta disponibilidad y escalabilidad automática.
+- Auto Scaling is implemented for the frontend, providing high availability and automatic scalability.
 
 ---
 
 #### Backend
 
-El backend de la aplicación consiste en tres funciones Lambda: Payments, Products y Shipping.
+The application backend consists of three Lambda functions: Payments, Products, and Shipping.
 
-- **Lambda Functions**: Desplegadas en AWS Lambda para una ejecución serverless con alta disponibilidad. Las funciones Lambda ya son altamente disponibles y escalables por diseño. No es necesario tomar medidas adicionales para garantizar la alta disponibilidad en esta capa.
+- **Lambda Functions**: Deployed on AWS Lambda for serverless execution with high availability. Lambda functions are already highly available and scalable by design. No additional measures are necessary to ensure high availability at this layer.
 
-##### Acceso a Recursos
-- **Products**: Accede a la base de datos RDS PostgreSQL vía IAM Roles API Call para obtener datos.
-- **Shipping/Payments**: Acceden a AWS API Gateway vía IAM Roles API Call para interactuar con servicios externos.
-- Todas las Lambda son accesibles desde el Frontend como se mencionó con anterioridad, y tienen acceso a los buckets S3 de Pagos y Envíos vía IAM Roles API Call.
+##### Resource Access
+- **Products**: Accesses the RDS PostgreSQL database via IAM Roles API Call to retrieve data.
+- **Shipping/Payments**: Access AWS API Gateway via IAM Roles API Call to interact with external services.
+- All Lambdas are accessible from the Frontend as mentioned previously, and have access to the Payments and Shipping S3 buckets via IAM Roles API Call.
 
 ## IAM Roles/Policies Backend
 
-#### Acceso Lambda Products --> RDS
+#### Lambda Products --> RDS Access
 
 ```json
 {
@@ -95,7 +95,7 @@ El backend de la aplicación consiste en tres funciones Lambda: Payments, Produc
 }
 ```
 
-#### Acceso Lambdas --> AWS API Gateway
+#### Lambdas --> AWS API Gateway Access
 
 ```json
 {
@@ -111,7 +111,7 @@ El backend de la aplicación consiste en tres funciones Lambda: Payments, Produc
     ]
 }
 ```
-#### Acceso Lambdas --> Buckets S3
+#### Lambdas --> S3 Buckets Access
 
 ```json
 {
@@ -134,28 +134,28 @@ El backend de la aplicación consiste en tres funciones Lambda: Payments, Produc
 ```
 ---
 
-#### Almacenamiento
+#### Storage
 
-Dos buckets de Amazon S3 son utilizados para almacenar datos de pagos y envíos.
+Two Amazon S3 buckets are used to store payment and shipping data.
 
-- **Bucket S3**: Almacenamiento de metadatos de pagos y órdenes de envío.
+- **S3 Bucket**: Storage of payment metadata and shipping orders.
 
 ---
 
-#### Base de Datos RDS
+#### RDS Database
 
-La base de datos PostgreSQL en RDS se configura con una replicación de sincronización de 5ms RTT, y opera en modalidad Multi-AZ para alta disponibilidad.
+The PostgreSQL database in RDS is configured with 5ms RTT synchronous replication and operates in Multi-AZ mode for high availability.
 
-- **Replicación Multi-AZ**: Garantiza la disponibilidad continua de datos en caso de falla de una zona de disponibilidad.
+- **Multi-AZ Replication**: Ensures continuous data availability in case of an availability zone failure.
 
-#### Tablas de Ruta - RDS (us-east-1)
+#### Route Tables - RDS (us-east-1)
 
 | Destination  | Target   |
 |--------------|----------|
 | 10.0.4.0/24  | Local    |
 | 10.0.5.0/24  | Local    |
 
-#### Tablas de Ruta - RDS (us-east-2)
+#### Route Tables - RDS (us-east-2)
 
 | Destination  | Target   |
 |--------------|----------|
@@ -165,147 +165,147 @@ La base de datos PostgreSQL en RDS se configura con una replicación de sincroni
 
 ---
 
-#### Estrategia de Disaster Recovery
+#### Disaster Recovery Strategy
 
-Se implementa una estrategia de recuperación ante desastres **Multi-Site Active/Active** entre las regiones us-east-1 y us-east-2 de AWS que permite recuperarse en 5 minutos.
+A **Multi-Site Active/Active** disaster recovery strategy is implemented between AWS regions us-east-1 and us-east-2, allowing recovery in 5 minutes.
 
 ![image](https://github.com/fertab/proyecto-x/assets/8042545/6ddb7350-8fc5-49c3-b246-82449b3aaf18)
 
 
-- Este plan de recuperación ante desastres es el más rápido en la restauración del sistema durante un evento de recuperación ante desastres.
-- Multi-site es una copia uno a uno de la infraestructura que se encuentra y se ejecuta en otra región (o AZ), conocida como configuración activo-activo.
-- Ofrece el mejor RTO (Recovery Time Objective) y RPO (Recovery Point Objective), ya que no se espera tiempo de inactividad y se debe experimentar poca o ninguna pérdida de datos, lo cual es acorde a lo requerido por el Proyecto X.
-- Se puede utilizar un servicio DNS que admita el enrutamiento ponderado, como Route 53, para enrutar el tráfico de producción a diferentes sitios que brindan la misma aplicación de Proyecto X.
-- Durante la conmutación por error, es posibe aumentar rápidamente la capacidad informática utilizando Autoscaling o cambiando el tamaño de las instancias a un tamaño mayor.
-- Varios servicios en AWS, como RDS, ofrecen una función multi-AZ que permite aprovisionar recursos en una ubicación diferente para una configuración más tolerante a fallas.
+- This disaster recovery plan is the fastest in restoring the system during a disaster recovery event.
+- Multi-site is a one-to-one copy of the infrastructure that is located and runs in another region (or AZ), known as an active-active configuration.
+- It offers the best RTO (Recovery Time Objective) and RPO (Recovery Point Objective), as no downtime is expected and little or no data loss should be experienced, which is in line with what is required by Project X.
+- A DNS service that supports weighted routing, such as Route 53, can be used to route production traffic to different sites that provide the same Project X application.
+- During failover, it is possible to quickly increase computing capacity using Autoscaling or changing instance sizes to a larger size.
+- Several AWS services, such as RDS, offer a multi-AZ feature that allows provisioning resources in a different location for a more fault-tolerant configuration.
 
 ---
 
-#### Monitoreo y Notificaciones
+#### Monitoring and Notifications
 
-La salud de la región se monitorea utilizando Amazon CloudWatch, con notificaciones enviadas al usuario a través de Amazon SNS.
+Region health is monitored using Amazon CloudWatch, with notifications sent to users through Amazon SNS.
 
-- **Amazon CloudWatch**: Monitoreo continuo de métricas y eventos de la región.
-- **Amazon SNS**: Notificaciones de eventos críticos enviadas a los usuarios suscritos.
-
----
-
-#### Subscripción a Personal Health Dashboard
-
-Los usuarios están suscriptos al Personal Health Dashboard de AWS para recibir información sobre el estado de salud de la infraestructura y la región.
+- **Amazon CloudWatch**: Continuous monitoring of region metrics and events.
+- **Amazon SNS**: Critical event notifications sent to subscribed users.
 
 ---
 
-#### Zonas de Disponibilidad
+#### Personal Health Dashboard Subscription
 
-Tanto el Frontend como la base de datos PostgreSQL en RDS están distribuidos en dos zonas de disponibilidad (AZs) para garantizar la tolerancia a fallos y la alta disponibilidad.
+Users are subscribed to AWS Personal Health Dashboard to receive information about the health status of the infrastructure and the region.
 
-#### NACL's (Network Access Control List)
-- Se ha implementado un NACL entre el Frontend y la base de datos PostgreSQL en RDS para restringir el acceso desde el Frontend hacia RDS y viceversa.
+---
+
+#### Availability Zones
+
+Both the Frontend and the PostgreSQL database in RDS are distributed across two availability zones (AZs) to ensure fault tolerance and high availability.
+
+#### NACLs (Network Access Control List)
+- A NACL has been implemented between the Frontend and the PostgreSQL database in RDS to restrict access from the Frontend to RDS and vice versa.
 
 **Frontend - us-east-1**:
-- **Entrada**:
-  - Número de regla: 100
-  - Tipo: Denegar
-  - Protocolo: Todos
-  - Puerto de origen: Todos
-  - Puerto de destino: Todos
-  - Rango de IP de origen: 10.0.4.0/23 (Subred RDS)
-  - Rango de IP de destino: 10.0.0.0/22 (Todas las subredes Frontend)
-- **Salida**:
-  - Número de regla: 100
-  - Tipo: Denegar
-  - Protocolo: Todos
-  - Puerto de origen: Todos
-  - Puerto de destino: Todos
-  - Rango de IP de origen: 10.0.0.0/22 (Todas las subredes Frontend)
-  - Rango de IP de destino: 10.0.4.0/23 (Subred RDS)
+- **Inbound**:
+  - Rule number: 100
+  - Type: Deny
+  - Protocol: All
+  - Source port: All
+  - Destination port: All
+  - Source IP range: 10.0.4.0/23 (RDS Subnet)
+  - Destination IP range: 10.0.0.0/22 (All Frontend subnets)
+- **Outbound**:
+  - Rule number: 100
+  - Type: Deny
+  - Protocol: All
+  - Source port: All
+  - Destination port: All
+  - Source IP range: 10.0.0.0/22 (All Frontend subnets)
+  - Destination IP range: 10.0.4.0/23 (RDS Subnet)
 
 **RDS - us-east-1**:
-- **Entrada**:
-  - Número de regla: 100
-  - Tipo: Denegar
-  - Protocolo: Todos
-  - Puerto de origen: Todos
-  - Puerto de destino: Todos
-  - Rango de IP de origen: 10.0.0.0/22 (Todas las subredes Frontend)
-  - Rango de IP de destino: 10.0.4.0/23 (Subred RDS)
-- **Salida**:
-  - Número de regla: 100
-  - Tipo: Denegar
-  - Protocolo: Todos
-  - Puerto de origen: Todos
-  - Puerto de destino: Todos
-  - Rango de IP de origen: 10.0.4.0/23 (Subred RDS)
-  - Rango de IP de destino: 10.0.0.0/22 (Todas las subredes Frontend)
+- **Inbound**:
+  - Rule number: 100
+  - Type: Deny
+  - Protocol: All
+  - Source port: All
+  - Destination port: All
+  - Source IP range: 10.0.0.0/22 (All Frontend subnets)
+  - Destination IP range: 10.0.4.0/23 (RDS Subnet)
+- **Outbound**:
+  - Rule number: 100
+  - Type: Deny
+  - Protocol: All
+  - Source port: All
+  - Destination port: All
+  - Source IP range: 10.0.4.0/23 (RDS Subnet)
+  - Destination IP range: 10.0.0.0/22 (All Frontend subnets)
 
 **Frontend - us-east-2**:
-- **Entrada**:
-  - Número de regla: 100
-  - Tipo: Denegar
-  - Protocolo: Todos
-  - Puerto de origen: Todos
-  - Puerto de destino: Todos
-  - Rango de IP de origen: 172.0.4.0/23 (Subred RDS)
-  - Rango de IP de destino: 172.0.0.0/22 (Todas las subredes Frontend)
-- **Salida**:
-  - Número de regla: 100
-  - Tipo: Denegar
-  - Protocolo: Todos
-  - Puerto de origen: Todos
-  - Puerto de destino: Todos
-  - Rango de IP de origen: 172.0.0.0/22 (Todas las subredes Frontend)
-  - Rango de IP de destino: 172.0.4.0/23 (Subred RDS)
+- **Inbound**:
+  - Rule number: 100
+  - Type: Deny
+  - Protocol: All
+  - Source port: All
+  - Destination port: All
+  - Source IP range: 172.0.4.0/23 (RDS Subnet)
+  - Destination IP range: 172.0.0.0/22 (All Frontend subnets)
+- **Outbound**:
+  - Rule number: 100
+  - Type: Deny
+  - Protocol: All
+  - Source port: All
+  - Destination port: All
+  - Source IP range: 172.0.0.0/22 (All Frontend subnets)
+  - Destination IP range: 172.0.4.0/23 (RDS Subnet)
 
 **RDS - us-east-2**:
-- **Entrada**:
-  - Número de regla: 100
-  - Tipo: Denegar
-  - Protocolo: Todos
-  - Puerto de origen: Todos
-  - Puerto de destino: Todos
-  - Rango de IP de origen: 172.0.0.0/22 (Todas las subredes Frontend)
-  - Rango de IP de destino: 172.0.4.0/23 (Subred RDS)
-- **Salida**:
-  - Número de regla: 100
-  - Tipo: Denegar
-  - Protocolo: Todos
-  - Puerto de origen: Todos
-  - Puerto de destino: Todos
-  - Rango de IP de origen: 172.0.4.0/23 (Subred RDS)
-  - Rango de IP de destino: 172.0.0.0/22 (Todas las subredes Frontend)
+- **Inbound**:
+  - Rule number: 100
+  - Type: Deny
+  - Protocol: All
+  - Source port: All
+  - Destination port: All
+  - Source IP range: 172.0.0.0/22 (All Frontend subnets)
+  - Destination IP range: 172.0.4.0/23 (RDS Subnet)
+- **Outbound**:
+  - Rule number: 100
+  - Type: Deny
+  - Protocol: All
+  - Source port: All
+  - Destination port: All
+  - Source IP range: 172.0.4.0/23 (RDS Subnet)
+  - Destination IP range: 172.0.0.0/22 (All Frontend subnets)
 
 ---
 
-Esta documentación proporciona una descripción detallada de la arquitectura de la aplicación Proyecto X en AWS, incluyendo cada componente y decisión de diseño tomada para garantizar la disponibilidad, escalabilidad y seguridad de la aplicación.
+This documentation provides a detailed description of the Project X application architecture on AWS, including each component and design decision made to ensure the application's availability, scalability, and security.
 
 ---
 
-## Recomendaciones de mejoras a futuro y comentarios
+## Future improvement recommendations and comments
 
-1. En el enunciado indica **"Database: PostgreSQL, la cual está desplegada sobre RDS. Todas las aplicaciones usan el mismo cluster de RDS."**
+1. The statement indicates **"Database: PostgreSQL, which is deployed on RDS. All applications use the same RDS cluster."**
    
-   Como buena práctica no considero que exista comunicación entre el Frontend y la base de datos, sino que esta se haga a través del Backend.
-   Por ese motivo se configuró un NACL entre el Frontend y la base de datos, para no permitir el tráfico entre estas capas.
-   Si de cualquier forma se quisiera esto, se configuraría un Security Group en RDS con el puerto 5432, se removería el NACL y se configuraría los accesos desde las Route Tables de cada capa, lo que permitiría el tráfico.
+   As a best practice, I do not consider that there should be communication between the Frontend and the database, but rather that it should be done through the Backend.
+   For this reason, a NACL was configured between the Frontend and the database, to not allow traffic between these layers.
+   If this were desired in any case, a Security Group would be configured in RDS with port 5432, the NACL would be removed, and access would be configured from the Route Tables of each layer, which would allow traffic.
 
-2. Como recomendación sugeriría implementar **CloudFront** como una capa de distribución de contenido para mejorar la entrega de contenido estático y dinámico, optimizando la velocidad de carga del sitio web y reduciendo la carga en los servidores de origen. Además, configurar una estrategia de caché efectiva ayudaría a maximizar los beneficios de rendimiento de CloudFront.
+2. As a recommendation, I would suggest implementing **CloudFront** as a content distribution layer to improve the delivery of static and dynamic content, optimizing website load speed and reducing the load on origin servers. Additionally, configuring an effective caching strategy would help maximize CloudFront's performance benefits.
 
-3. Además, para garantizar la seguridad y disponibilidad de los datos, recomiendo el uso de **AWS Backup**.
-   - Con AWS Backup será posible respaldar de manera automatizada los recursos críticos, incluyendo el Frontend, el Backend y la base de datos en RDS.
-   - Esto proporcionará una capa adicional de protección de los datos, facilitando la restauración en caso de pérdida de información o falla del sistema, brindando tranquilidad y seguridad para la infraestructura en la nube.
+3. Furthermore, to ensure data security and availability, I recommend using **AWS Backup**.
+   - With AWS Backup it will be possible to automatically backup critical resources, including the Frontend, Backend, and the RDS database.
+   - This will provide an additional layer of data protection, facilitating restoration in case of data loss or system failure, providing peace of mind and security for the cloud infrastructure.
 
-4. **Despliegue Continuo**
-   - También recomiendo el uso de repositorios de código como **AWS CodeCommit** para almacenar el código fuente de las aplicaciones.
-   - Esto proporcionará un control de versiones centralizado y un historial de cambios para el código.
+4. **Continuous Deployment**
+   - I also recommend using code repositories such as **AWS CodeCommit** to store the application source code.
+   - This will provide centralized version control and a change history for the code.
 
 - **Pipeline:**
-  - Es posible configurar un pipeline de despliegue continuo utilizando **AWS CodePipeline** el cual puede estar integrado con **AWS CodeBuild** que permitirá compilar y probar la aplicación, para luego desplegarla automáticamente.
+  - It is possible to configure a continuous deployment pipeline using **AWS CodePipeline** which can be integrated with **AWS CodeBuild** that will allow compiling and testing the application, and then deploying it automatically.
 
-5. **Infraestructura como código**
-- Recomiendo por último el despliegue de la infraestructura a través de IaC (Infrastructure as Code) con herramientas como Terraform, la cual permite definir toda la infraestructura como código, lo que significa que los cambios en la infraestructura se pueden realizar de manera controlada y documentada. Esto ayuda a reducir errores, minimizar el tiempo de inactividad y mejorar la seguridad de la infraestructura.
+5. **Infrastructure as Code**
+- Finally, I recommend deploying the infrastructure through IaC (Infrastructure as Code) with tools like Terraform, which allows defining all infrastructure as code, meaning that infrastructure changes can be made in a controlled and documented manner. This helps reduce errors, minimize downtime, and improve infrastructure security.
 
-- Solo a modo de ejemplo, muestro a continuación un template que sirve para desplegar el Frontend, Backend y Base de datos. Este no tiene los datos exactos, sino que trae datos genéricos.
+- Only as an example, I show below a template that serves to deploy the Frontend, Backend, and Database. This does not have exact data, but rather contains generic data.
 
 ## Frontend
 
@@ -392,7 +392,7 @@ resource "aws_autoscaling_group" "frontend_asg" {
 }
 
 resource "aws_launch_configuration" "frontend_lc" {
-  image_id        = "ami-12345678" # Cambiar por una AMI válida
+  image_id        = "ami-12345678" # Change to a valid AMI
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.frontend_sg.name]
   key_name        = "your-key-name"
@@ -475,7 +475,7 @@ resource "aws_lambda_permission" "example" {
 }
 ```
 
-## Base de datos
+## Database
 
 ```
 provider "aws" {
